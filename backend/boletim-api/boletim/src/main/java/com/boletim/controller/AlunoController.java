@@ -26,7 +26,7 @@ public class AlunoController {
         return ResponseEntity.ok(alunoService.listarTodos());
     }
 
-    @GetMapping("{/id}")
+    @GetMapping("/{id}")
     public ResponseEntity<Aluno> buscarId(@PathVariable Long id) {
         Optional<Aluno> aluno = alunoService.buscarId(id);
         return aluno.map(ResponseEntity::ok)
