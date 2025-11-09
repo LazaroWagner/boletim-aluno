@@ -1,6 +1,8 @@
 package com.boletim.model;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
 
 @Entity
@@ -10,16 +12,22 @@ public class Nota {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotNull(message = "A nota é obrigatória")
+    @NotNull(message = "O valor da nota é obrigatório")
+    @Min(value = 0, message = "A nota mínima é 0")
+    @Max(value = 10, message = "A nota máxima é 10")
     private Double valor;
 
     @ManyToOne
-    @JoinColumn(name = "aluno_id")
+    @JoinColumn(name = "aluno_id", nullable = false)
     private Aluno aluno;
 
     @ManyToOne
-    @JoinColumn(name = "avaliacao_id")
+    @JoinColumn(name = "avaliacao_id", nullable = false)
     private Avaliacao avaliacao;
+
+    @ManyToOne
+    @JoinColumn(name = "turma_id", nullable = false)
+    private Turma turma;
 
     public Long getId() {
         return id;
@@ -52,5 +60,15 @@ public class Nota {
     public void setAvaliacao(Avaliacao avaliacao) {
         this.avaliacao = avaliacao;
     }
+
+    public Turma getTurma() {
+        return turma;
+    }
+
+    public void setTurma(Turma turma) {
+        this.turma = turma;
+    }
+
+    // Getters e Setters
 }
 
