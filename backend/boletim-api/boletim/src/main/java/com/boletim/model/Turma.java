@@ -2,21 +2,23 @@ package com.boletim.model;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
+
+import java.util.List;
 
 @Entity
-public class Aluno {
+public class Turma {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotBlank(message = "O nome do aluno é obrigatorio")
+    @NotBlank(message = "O nome da turma é obrigatorio")
     private String nome;
 
-    @ManyToOne
-    @JoinColumn(name = "turma_id")
-    @NotNull(message = "A turma é obrigatoria")
-    private Turma turma;
+    @OneToMany( mappedBy = "turma",
+                cascade = CascadeType.ALL,
+                orphanRemoval = true)
+    private List<Aluno> aluno;
 
     public Long getId() {
         return id;
@@ -34,11 +36,11 @@ public class Aluno {
         this.nome = nome;
     }
 
-    public Turma getTurma() {
-        return turma;
+    public List<Aluno> getAluno() {
+        return aluno;
     }
 
-    public void setTurma(Turma turma) {
-        this.turma = turma;
+    public void setAluno(List<Aluno> aluno) {
+        this.aluno = aluno;
     }
 }
