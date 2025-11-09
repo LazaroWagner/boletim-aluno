@@ -1,9 +1,7 @@
 package com.boletim.model;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.Max;
-import jakarta.validation.constraints.Min;
-import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.*;
 
 @Entity
 public class Nota {
@@ -13,8 +11,8 @@ public class Nota {
     private Long id;
 
     @NotNull(message = "O valor da nota é obrigatório")
-    @Min(value = 0, message = "A nota mínima é 0")
-    @Max(value = 10, message = "A nota máxima é 10")
+    @DecimalMin(value = "0.0", message = "A nota mínima é 0.0")
+    @DecimalMax(value = "10.0", message = "A nota máxima é 10.0")
     private Double valor;
 
     @ManyToOne
@@ -68,7 +66,5 @@ public class Nota {
     public void setTurma(Turma turma) {
         this.turma = turma;
     }
-
-    // Getters e Setters
 }
 

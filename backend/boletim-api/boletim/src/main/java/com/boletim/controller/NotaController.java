@@ -5,9 +5,11 @@ import com.boletim.dto.NotaRequest;
 import com.boletim.dto.NotaResponse;
 import com.boletim.service.NotaService;
 import jakarta.validation.Valid;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @RestController
@@ -25,6 +27,22 @@ public class NotaController {
         return ResponseEntity.ok(notaService.listarTodo());
     }
 
+    @GetMapping("/aluno/{idAluno}")
+    public List<NotaResponse> listarNotasPorAluno(@PathVariable Long idAluno) {
+        return notaService.listarNotasAluno(idAluno);
+    }
+
+    @GetMapping("/media/filtro")
+    public List<MediaAlunoResponse> mediaFiltrada(
+            @RequestParam Long turmaId,
+            @RequestParam Long disciplinaId,
+            @RequestParam(required = false) String tipo,
+            @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate inicio,
+            @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate fim
+    ) {
+        return notaService.calcularMediaFiltrada(turmaId, disciplinaId, tipo, inicio, fim);
+    }
+
     @PostMapping
     public ResponseEntity<NotaResponse> criar(@Valid @RequestBody NotaRequest request) {
         NotaResponse nota = notaService.criar(request);
@@ -37,11 +55,11 @@ public class NotaController {
         return ResponseEntity.ok(notas);
     }
 
-    @GetMapping("/medias")
+    @GetMapping("/media/turma/{idTurma}/disciplina/{idDisciplina}")
     public ResponseEntity<List<MediaAlunoResponse>> calcularMedias(
-            @RequestParam Long turmaId,
-            @RequestParam Long disciplinaId) {
-        List<MediaAlunoResponse> medias = notaService.calcularMediaTurmaDisciplina(turmaId, disciplinaId);
+            @PathVariable Long idTurma,
+            @PathVariable Long idDisciplina) {
+        List<MediaAlunoResponse> medias = notaService.calcularMediaTurmaDisciplina(idTurma, idDisciplina);
         return ResponseEntity.ok(medias);
     }
 }

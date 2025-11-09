@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class AlunoService {
@@ -25,8 +26,16 @@ public class AlunoService {
     }
 
 
-    public List<Aluno> listarTodos() {
-        return alunoRepository.findAll();
+    public List<AlunoResponse> listarTodo() {
+        return alunoRepository.findAll().stream().map(aluno -> {
+            return new AlunoResponse(
+                    aluno.getId(),
+                    aluno.getNome(),
+                    aluno.getTurma().getNome()
+            );
+        }).collect(Collectors.toList());
+
+
     }
 
     public Optional<Aluno> buscarId(Long id) {

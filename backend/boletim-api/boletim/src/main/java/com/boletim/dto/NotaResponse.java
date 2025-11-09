@@ -1,44 +1,76 @@
 package com.boletim.dto;
 
+import java.time.LocalDate;
+
 public class NotaResponse {
 
     private Long id;
-    private Long alunoId;
-    private String alunoNome;
-    private Long avaliacaoId;
-    private String avaliacaoTipo;
-    private Double valor;
+    private double valor;
+    private String tipoAvaliacao;
+    private LocalDate data;
+    private String disciplina;
+    private String turma;
 
-    public NotaResponse(Long id, Long alunoId, String alunoNome, Long avaliacaoId, String avaliacaoTipo, Double valor) {
+    public NotaResponse(Long id, Double valor, String tipoAvaliacao, LocalDate data, String disciplina, String turma) {
+    }
+
+    public NotaResponse(Long id, double valor, String tipoAvaliacao, LocalDate data, String disciplina, String turma) {
         this.id = id;
-        this.alunoId = alunoId;
-        this.alunoNome = alunoNome;
-        this.avaliacaoId = avaliacaoId;
-        this.avaliacaoTipo = avaliacaoTipo;
         this.valor = valor;
+        this.tipoAvaliacao = tipoAvaliacao;
+        this.data = data;
+        this.disciplina = disciplina;
+        this.turma = turma;
+    }
+
+    public NotaResponse(Long id, Long id1, String nome, Long id2, String tipo, Double valor) {
     }
 
     public Long getId() {
         return id;
     }
 
-    public Long getAlunoId() {
-        return alunoId;
+    public void setId(Long id) {
+        this.id = id;
     }
 
-    public String getAlunoNome() {
-        return alunoNome;
-    }
-
-    public Long getAvaliacaoId() {
-        return avaliacaoId;
-    }
-
-    public String getAvaliacaoTipo() {
-        return avaliacaoTipo;
-    }
-
-    public Double getValor() {
+    public double getValor() {
         return valor;
+    }
+
+    public void setValor(double valor) {
+        this.valor = valor;
+    }
+
+    public String getTipoAvaliacao() {
+        return tipoAvaliacao;
+    }
+
+    public void setTipoAvaliacao(String tipoAvaliacao) {
+        this.tipoAvaliacao = tipoAvaliacao;
+    }
+
+    public LocalDate getData() {
+        return data;
+    }
+
+    public void setData(LocalDate data) {
+        this.data = data;
+    }
+
+    public String getDisciplina() {
+        return disciplina;
+    }
+
+    public void setDisciplina(String disciplina) {
+        this.disciplina = disciplina;
+    }
+
+    public String getTurma() {
+        return turma;
+    }
+
+    public void setTurma(String turma) {
+        this.turma = turma;
     }
 }

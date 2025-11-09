@@ -7,40 +7,72 @@ public class AvaliacaoResponse {
     private Long id;
     private String tipo;
     private LocalDate data;
-    private Integer peso;
-    private Long disciplinaId;
-    private String disciplinaNome;
+    private double peso;
+    private DisciplinaResponse disciplina;
 
-    public AvaliacaoResponse(Long id, String tipo, LocalDate data, Integer peso, Long disciplinaId, String disciplinaNome) {
+
+    public AvaliacaoResponse(Long id, String tipo, LocalDate data, double peso, DisciplinaResponse disciplina) {
         this.id = id;
         this.tipo = tipo;
         this.data = data;
         this.peso = peso;
-        this.disciplinaId = disciplinaId;
-        this.disciplinaNome = disciplinaNome;
+        this.disciplina = disciplina;
+    }
+
+    public AvaliacaoResponse(Long id, String tipo, LocalDate data, double peso, Long id1, String nome) {
+
+        this.id = id;
+        this.tipo = tipo;
+        this.data = data;
+        this.peso = peso;
+        this.disciplina = new DisciplinaResponse(id1, nome);
+    }
+
+    public AvaliacaoResponse(Long id, String tipo, LocalDate data, double peso, String nome) {
+        this.id = id;
+        this.tipo = tipo;
+        this.data = data;
+        this.peso = peso;
+        this.disciplina = new DisciplinaResponse(null, nome);
     }
 
     public Long getId() {
         return id;
     }
 
+    public void setId(Long id) {
+        this.id = id;
+    }
+
     public String getTipo() {
         return tipo;
+    }
+
+    public void setTipo(String tipo) {
+        this.tipo = tipo;
     }
 
     public LocalDate getData() {
         return data;
     }
 
-    public Integer getPeso() {
+    public void setData(LocalDate data) {
+        this.data = data;
+    }
+
+    public double getPeso() {
         return peso;
     }
 
-    public Long getDisciplinaId() {
-        return disciplinaId;
+    public void setPeso(double peso) {
+        this.peso = peso;
     }
 
-    public String getDisciplinaNome() {
-        return disciplinaNome;
+    public DisciplinaResponse getDisciplina() {
+        return disciplina;
+    }
+
+    public void setDisciplina(DisciplinaResponse disciplina) {
+        this.disciplina = disciplina;
     }
 }

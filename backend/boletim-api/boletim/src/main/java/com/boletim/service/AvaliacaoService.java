@@ -45,6 +45,10 @@ public class AvaliacaoService {
         avaliacao.setPeso(dto.getPeso());
         avaliacao.setDisciplina(disciplina);
 
+        System.out.println(">>> Avaliação antes de salvar: " + avaliacao);
+
+
+//        validar aqui
         Avaliacao salva = avaliacaoRepository.save(avaliacao);
         return toResponse(salva);
     }
@@ -83,5 +87,18 @@ public class AvaliacaoService {
                 avaliacao.getDisciplina().getId(),
                 avaliacao.getDisciplina().getNome()
         );
+    }
+
+    public List<AvaliacaoResponse> listarDisciplina(Long idDisciplina) {
+        List<Avaliacao> avaliacoes = avaliacaoRepository.findByDisciplinaId(idDisciplina);
+
+        return avaliacoes.stream().map(av ->
+                new AvaliacaoResponse(
+                av.getId(),
+                av.getTipo(),
+                av.getData(),
+                av.getPeso(),
+                av.getDisciplina().getNome()
+        )).collect(Collectors.toList());
     }
 }

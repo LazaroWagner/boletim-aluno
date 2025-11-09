@@ -12,7 +12,8 @@ import java.net.URI;
 import java.util.List;
 import java.util.Optional;
 
-@RestController@RequestMapping("/aluno")
+@RestController
+@RequestMapping("/aluno")
 public class AlunoController {
 
     private final AlunoService alunoService;
@@ -22,8 +23,8 @@ public class AlunoController {
     }
 
     @GetMapping
-    public ResponseEntity<List<Aluno>> listarTodos() {
-        return ResponseEntity.ok(alunoService.listarTodos());
+    public ResponseEntity<List<AlunoResponse>> listarTodo() {
+        return ResponseEntity.ok(alunoService.listarTodo());
     }
 
     @GetMapping("/{id}")

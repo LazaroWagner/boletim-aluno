@@ -13,6 +13,7 @@ import com.boletim.repository.NotaRepository;
 import com.boletim.repository.TurmaRepository;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -55,9 +56,42 @@ public class NotaService {
         nota.setAvaliacao(avaliacao);
         nota.setTurma(turma);
         nota.setValor(dto.getValor());
-
+//avalia aqui
         Nota salva = notaRepository.save(nota);
         return toResponse(salva);
+    }
+
+    public List<MediaAlunoResponse> calcularMediaFiltrada(Long turmaId,
+                                                          Long disciplinaId,
+                                                          String tipo,
+                                                          LocalDate inicio,
+                                                          LocalDate fim) {
+        List<Aluno> alunos = alunoRepository.findByTurmaId(turmaId);
+        return alunos.stream().map(aluno -> {
+            List<Nota> notas = notaRepository.buscarComFiltro(
+                    aluno.getId(), turmaId, disciplinaId, tipo, inicio, fim
+            );
+            double somaPesos = notas.stream().mapToDouble(n -> n.getAvaliacao().getPeso()).sum();
+            double media = notas.stream()
+                    .mapToDouble(n -> n.getValor() * n.getAvaliacao().getPeso())
+                    .sum() / (somaPesos == 0 ? 1 : somaPesos);
+
+            return new MediaAlunoResponse(aluno.getId(), aluno.getNome(), media);
+        }).collect(Collectors.toList());
+    }
+
+
+    public List<NotaResponse> listarNotasAluno(Long alunoId) {
+        List<Nota> notas = notaRepository.findByAlunoId(alunoId);
+
+        return notas.stream().map(nota -> new NotaResponse(
+                nota.getId(),
+                nota.getValor(),
+                nota.getAvaliacao().getTipo(),
+                nota.getAvaliacao().getData(),
+                nota.getAvaliacao().getDisciplina().getNome(),
+                nota.getTurma().getNome()
+        )).collect(Collectors.toList());
     }
 
     public List<NotaResponse> salvarLote(List<NotaRequest> dtos) {
@@ -104,7 +138,7 @@ public class NotaService {
         double somaNotasPonderadas = 0;
 
         for (Nota nota : notas) {
-            int peso = nota.getAvaliacao().getPeso();
+            double peso = nota.getAvaliacao().getPeso();
             double valor = nota.getValor();
 
             somaPesos += peso;
@@ -112,7 +146,7 @@ public class NotaService {
         }
 
         if (somaPesos == 0) {
-            return null; // ou 0.0, dependendo da regra de negócio
+            return null;
         }
 
         return somaNotasPonderadas / somaPesos;
@@ -130,7 +164,7 @@ public class NotaService {
                 Optional<Nota> notaOpt = notaRepository.findByAlunoIdAndAvaliacaoId(aluno.getId(), avaliacao.getId());
                 if (notaOpt.isPresent()) {
                     double valor = notaOpt.get().getValor();
-                    int peso = avaliacao.getPeso();
+                    double peso = avaliacao.getPeso();
                     somaPesos += peso;
                     somaNotasPonderadas += valor * peso;
                 }
@@ -140,4 +174,5 @@ public class NotaService {
             return new MediaAlunoResponse(aluno.getId(), aluno.getNome(), media);
         }).collect(Collectors.toList());
     }
+
 }

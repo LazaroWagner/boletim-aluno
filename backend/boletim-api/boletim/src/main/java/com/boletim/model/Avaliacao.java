@@ -21,17 +21,29 @@ public class Avaliacao {
     @NotNull(message = "O peso da avaliação é obrigatório")
     @Min(value = 1, message = "O peso mínimo é 1")
     @Max(value = 5, message = "O peso máximo é 5")
-    private Integer peso;
+    private double peso;
 
     @NotNull(message = "A data da avaliação é obrigatória")
     private LocalDate data;
 
     @ManyToOne
-    @JoinColumn(name = "disciplina_id")
+    @JoinColumn(name = "disciplina_id", nullable = false)
     private Disciplina disciplina;
 
     @OneToMany(mappedBy = "avaliacao", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Nota> nota;
+    private List<Nota> notas;
+
+    public Avaliacao() {
+    }
+
+    public Avaliacao(Long id, String tipo, double peso, LocalDate data, Disciplina disciplina, List<Nota> notas) {
+        this.id = id;
+        this.tipo = tipo;
+        this.peso = peso;
+        this.data = data;
+        this.disciplina = disciplina;
+        this.notas = notas;
+    }
 
     public Long getId() {
         return id;
@@ -49,11 +61,11 @@ public class Avaliacao {
         this.tipo = tipo;
     }
 
-    public Integer getPeso() {
+    public double getPeso() {
         return peso;
     }
 
-    public void setPeso(Integer peso) {
+    public void setPeso(double peso) {
         this.peso = peso;
     }
 
@@ -73,12 +85,22 @@ public class Avaliacao {
         this.disciplina = disciplina;
     }
 
-    public List<Nota> getNota() {
-        return nota;
+    public List<Nota> getNotas() {
+        return notas;
     }
 
-    public void setNota(List<Nota> nota) {
-        this.nota = nota;
+    public void setNotas(List<Nota> notas) {
+        this.notas = notas;
+    }
+
+    @Override
+    public String toString() {
+        return "Avaliacao{" +
+                "id=" + id +
+                ", tipo='" + tipo + '\'' +
+                ", peso=" + peso +
+                ", data=" + data +
+                '}';
     }
 }
 

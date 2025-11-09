@@ -15,8 +15,17 @@ public class Disciplina {
     @NotBlank(message = "O nome da disciplina é obrigatorio")
     private String nome;
 
-    @OneToMany(mappedBy = "disciplina", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Avaliacao> avaliacao;
+    @OneToMany(mappedBy = "disciplina")
+    private List<Avaliacao> avaliacoes;
+
+    public Disciplina() {
+    }
+
+    public Disciplina(Long id, String nome, List<Avaliacao> avaliacoes) {
+        this.id = id;
+        this.nome = nome;
+        this.avaliacoes = avaliacoes;
+    }
 
     public Long getId() {
         return id;
@@ -34,11 +43,11 @@ public class Disciplina {
         this.nome = nome;
     }
 
-    public List<Avaliacao> getAvaliacao() {
-        return avaliacao;
+    public List<Avaliacao> getAvaliacoes() {
+        return avaliacoes;
     }
 
-    public void setAvaliacao(List<Avaliacao> avaliacao) {
-        this.avaliacao = avaliacao;
+    public void setAvaliacoes(List<Avaliacao> avaliacoes) {
+        this.avaliacoes = avaliacoes;
     }
 }

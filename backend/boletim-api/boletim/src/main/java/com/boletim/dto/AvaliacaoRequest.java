@@ -14,7 +14,7 @@ public class AvaliacaoRequest {
     @NotNull(message = "O peso da avaliação é obrigatório")
     @Min(value = 1, message = "O peso mínimo é 1")
     @Max(value = 5, message = "O peso máximo é 5")
-    private Integer peso;
+    private double peso;
 
 
     @NotNull(message = "O ID da disciplina é obrigatório")
@@ -23,7 +23,7 @@ public class AvaliacaoRequest {
     public AvaliacaoRequest() {
     }
 
-    public AvaliacaoRequest(String tipo, LocalDate data,Integer peso, Long disciplinaId) {
+    public AvaliacaoRequest(String tipo, LocalDate data,double peso, Long disciplinaId) {
         this.tipo = tipo;
         this.data = data;
         this.peso = peso;
@@ -46,11 +46,11 @@ public class AvaliacaoRequest {
         this.data = data;
     }
 
-    public Integer getPeso() {
+    public double getPeso() {
         return peso;
     }
 
-    public void setPeso(Integer peso) {
+    public void setPeso(double peso) {
         this.peso = peso;
     }
 
