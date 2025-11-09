@@ -1,5 +1,7 @@
 package com.boletim.controller;
 
+import com.boletim.dto.TurmaRequest;
+import com.boletim.dto.TurmaResponse;
 import com.boletim.model.Turma;
 import com.boletim.service.TurmaService;
 import jakarta.validation.Valid;
@@ -23,33 +25,32 @@ public class TurmaController {
     }
 
     @GetMapping
-    public ResponseEntity<List<Turma>> listarToda(){
-        List<Turma> turma = turmaService.listarToda();
-        return ResponseEntity.ok(turma);
+    public ResponseEntity<List<TurmaResponse>> listarToda(){
+        return ResponseEntity.ok(turmaService.listarToda());
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Turma> buscarId(@PathVariable Long id) {
-        Optional<Turma> turma = turmaService.buscarId(id);
+    public ResponseEntity<TurmaResponse> buscarId(@PathVariable Long id) {
+        Optional<TurmaResponse> turma = turmaService.buscarId(id);
         return turma.map(ResponseEntity::ok)
                 .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
     @PostMapping
-    public ResponseEntity<Turma> criar( @Valid
+    public ResponseEntity<TurmaResponse> criar( @Valid
                                         @RequestBody
-                                        Turma turma
+                                        TurmaRequest dto
                                         ) {
-        Turma nova = turmaService.criar(turma);
+        TurmaResponse nova = turmaService.criar(dto);
         URI location = URI.create("/turma/" + nova.getId());
         return ResponseEntity.created(location).body(nova);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Turma> atualizar(@PathVariable Long id,
+    public ResponseEntity<TurmaResponse> atualizar(@PathVariable Long id,
                                            @Valid
-                                           @RequestBody Turma turmaAtualizada) {
-        Optional<Turma> atualizada = turmaService.atualizar(id, turmaAtualizada);
+                                           @RequestBody TurmaRequest dto) {
+        Optional<TurmaResponse> atualizada = turmaService.atualizar(id, dto);
         return atualizada.map(ResponseEntity::ok)
                 .orElseGet(() -> ResponseEntity.notFound()
                 .build());
