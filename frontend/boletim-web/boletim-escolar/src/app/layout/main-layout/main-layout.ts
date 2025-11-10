@@ -19,7 +19,7 @@ import { MatButtonModule } from '@angular/material/button';
     MatIconModule,
     MatButtonModule
   ],
-  templateUrl: './main-layout.component.html',
-  styleUrls: ['./main-layout.component.scss']
+  templateUrl: './main-layout.html',
+  styleUrls: ['./main-layout.scss']
 })
 export class MainLayoutComponent {}

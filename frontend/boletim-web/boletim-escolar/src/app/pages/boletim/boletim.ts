@@ -25,8 +25,8 @@ import { AlunoService } from '../../services/aluno.service';
     MatTableModule,
     MatButtonModule
   ],
-  templateUrl: './boletim.component.html',
-  styleUrls: ['./boletim.component.scss']
+  templateUrl: './boletim.html',
+  styleUrls: ['./boletim.scss']
 })
 export class BoletimComponent implements OnInit {
   turmaService = inject(TurmaService);

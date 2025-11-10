@@ -4,10 +4,10 @@ import { TurmaResponse } from '../../models/turma.model';
 
 @Component({
   selector: 'app-turma',
-  templateUrl: './turma.component.html',
-  //styleUrls: ['./turma.component.css']
+  templateUrl: './turma.html',
+  //styleUrls: ['./turma.css']
 })
-export class TurmaComponent implements OnInit {
+export class Turma implements OnInit {
   turmas: TurmaResponse[] = [];
 
   constructor(private turmaService: TurmaService) {}

@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { MainLayoutComponent } from './main-layout.component';
+import { CadastrarAlunoComponent } from './cadastrar-aluno';
 
-describe('MainLayout', () => {
-  let component: MainLayoutComponent;
-  let fixture: ComponentFixture<MainLayoutComponent>;
+describe('CadastrarAluno', () => {
+  let component: CadastrarAlunoComponent;
+  let fixture: ComponentFixture<CadastrarAlunoComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [MainLayoutComponent]
+      imports: [CadastrarAlunoComponent]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(MainLayoutComponent);
+    fixture = TestBed.createComponent(CadastrarAlunoComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

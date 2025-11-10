@@ -4,7 +4,7 @@ import { AlunoResponse } from '../../models/aluno.model';
 
 @Component({
   selector: 'app-aluno',
-  templateUrl: './aluno.component.html',
+  templateUrl: './aluno.html',
  // styleUrls: ['./aluno.component.css']
 })
 export class AlunoComponent implements OnInit {

@@ -23,8 +23,8 @@ import { AlunoRequest } from '../../../models/aluno.model';
     MatButtonModule,
     MatSnackBarModule
   ],
-  templateUrl: './cadastrar-aluno.component.html',
-  styleUrls: ['./cadastrar-aluno.component.scss']
+  templateUrl: './cadastrar-aluno.html',
+  styleUrls: ['./cadastrar-aluno.scss']
 })
 export class CadastrarAlunoComponent {
   aluno: AlunoRequest = {

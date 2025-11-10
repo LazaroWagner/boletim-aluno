@@ -4,10 +4,10 @@ import { AvaliacaoResponse } from '../../models/avaliacao.model';
 
 @Component({
   selector: 'app-avaliacao',
-  templateUrl: './avaliacao.component.html',
-  //styleUrls: ['./avaliacao.component.css']
+  templateUrl: './avaliacao.html',
+  //styleUrls: ['./avaliacao.css']
 })
-export class AvaliacaoComponent implements OnInit {
+export class Avaliacao implements OnInit {
   avaliacoes: AvaliacaoResponse[] = [];
 
   constructor(private avaliacaoService: AvaliacaoService) {}

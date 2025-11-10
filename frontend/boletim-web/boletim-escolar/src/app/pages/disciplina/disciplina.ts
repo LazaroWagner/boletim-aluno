@@ -4,8 +4,8 @@ import { DisciplinaResponse } from '../../models/disciplina.model';
 
 @Component({
   selector: 'app-disciplina',
-  templateUrl: './disciplina.component.html',
-  //styleUrls: ['./disciplina.component.css']
+  templateUrl: './disciplina.html',
+  //styleUrls: ['./disciplina.css']
 })
 export class DisciplinaComponent implements OnInit {
   disciplinas: DisciplinaResponse[] = [];

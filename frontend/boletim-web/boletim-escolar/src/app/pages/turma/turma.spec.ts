@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { CadastrarAlunoComponent } from './cadastrar-aluno.component';
+import { TurmaComponent } from './turma';
 
-describe('CadastrarAluno', () => {
-  let component: CadastrarAlunoComponent;
-  let fixture: ComponentFixture<CadastrarAlunoComponent>;
+describe('TurmaComponent', () => {
+  let component: TurmaComponent;
+  let fixture: ComponentFixture<TurmaComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [CadastrarAlunoComponent]
+      imports: [TurmaComponent]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(CadastrarAlunoComponent);
+    fixture = TestBed.createComponent(TurmaComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
