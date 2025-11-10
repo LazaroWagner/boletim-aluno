@@ -1,8 +1,10 @@
 package com.boletim.model;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -15,10 +17,12 @@ public class Turma {
     @NotBlank(message = "O nome da turma é obrigatorio")
     private String nome;
 
-    @OneToMany( mappedBy = "turma",
-                cascade = CascadeType.ALL,
-                orphanRemoval = true)
-    private List<Aluno> aluno;
+    @OneToMany(mappedBy = "turma")
+    @JsonManagedReference
+    private List<Aluno> alunos = new ArrayList<>();
+
+    public Turma() {
+    }
 
     public Long getId() {
         return id;
@@ -36,11 +40,11 @@ public class Turma {
         this.nome = nome;
     }
 
-    public List<Aluno> getAluno() {
-        return aluno;
+    public List<Aluno> getAlunos() {
+        return alunos;
     }
 
-    public void setAluno(List<Aluno> aluno) {
-        this.aluno = aluno;
+    public void setAlunos(List<Aluno> alunos) {
+        this.alunos = alunos;
     }
 }

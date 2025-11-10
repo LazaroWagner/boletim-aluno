@@ -33,6 +33,11 @@ public class AvaliacaoController {
                 .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
+    @GetMapping("/disciplina/{idDisciplina}")
+    public List<AvaliacaoResponse> listarDisciplina(@PathVariable Long idDisciplina) {
+        return avaliacaoService.listarDisciplina(idDisciplina);
+    }
+
     @PostMapping
     public ResponseEntity<AvaliacaoResponse> criar(@Valid @RequestBody AvaliacaoRequest dto) {
         AvaliacaoResponse nova = avaliacaoService.criar(dto);
