@@ -46,9 +46,9 @@ ou
 - Navegue até a pasta `frontend/boletim-web/boletim-escolar`
 - Instale as dependências:
 
-
+ ```bash
     npm install
-
+ ```
 
 - Rode o servidor Angular:
   ```bash
