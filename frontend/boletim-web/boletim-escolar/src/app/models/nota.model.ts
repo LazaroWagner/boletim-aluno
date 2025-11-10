@@ -8,6 +8,7 @@ export interface NotaLoteRequest {
   alunoId: number;
   avaliacaoId: number;
   valor: number;
+  turmaId: string;
 }
 
 export interface NotaResponse {

@@ -87,7 +87,7 @@ export class BoletimComponent implements OnInit {
       const avaliacaoId = Number(avaliacaoIdStr);
       const peso = this.avaliacoes.find(a => a.id === avaliacaoId)?.peso ?? 1;
       somaPesos += peso;
-      somaNotas += nota * peso;
+      somaNotas += Number(nota) * peso;
     }
 
     return (somaNotas / somaPesos).toFixed(2);
@@ -98,7 +98,8 @@ export class BoletimComponent implements OnInit {
       Object.entries(aluno.notas).map(([avaliacaoId, valor]) => ({
         alunoId: aluno.id,
         avaliacaoId: Number(avaliacaoId),
-        valor: Number(valor)
+        valor: Number(valor),
+        turmaId: this.turmaSelecionada!.toString()
       }))
     );
 
