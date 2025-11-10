@@ -1,0 +1,21 @@
+<h2>Lista de Avaliações</h2>
+<table>
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Título</th>
+      <th>Data</th>
+      <th>Tipo</th>
+      <th>Disciplina</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let avaliacao of avaliacoes">
+      <td>{{ avaliacao.id }}</td>
+      <td>{{ avaliacao.titulo }}</td>
+      <td>{{ avaliacao.data }}</td>
+      <td>{{ avaliacao.tipo }}</td>
+      <td>{{ avaliacao.disciplina?.nome }}</td>
+    </tr>
+  </tbody>
+</table>
