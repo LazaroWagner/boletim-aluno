@@ -1,0 +1,49 @@
+<h2>Boletim Escolar</h2>
+
+<div class="filtros">
+  <label for="turma">Turma:</label>
+  <select id="turma" [(ngModel)]="turmaSelecionada">
+    <option [value]="null">Selecione</option>
+    <option *ngFor="let turma of turmas" [value]="turma.id">{{ turma.nome }}</option>
+  </select>
+
+  <label for="disciplina">Disciplina:</label>
+  <select id="disciplina" [(ngModel)]="disciplinaSelecionada">
+    <option [value]="null">Selecione</option>
+    <option *ngFor="let disciplina of disciplinas" [value]="disciplina.id">{{ disciplina.nome }}</option>
+  </select>
+
+  <button (click)="carregarBoletim()">Carregar boletim</button>
+</div>
+
+<table *ngIf="alunos.length > 0">
+  <thead>
+    <tr>
+      <th>Aluno</th>
+      <th *ngFor="let avaliacao of avaliacoes">
+        {{ avaliacao.titulo }}<br />
+        <small>(peso {{ avaliacao.peso }})</small>
+      </th>
+      <th>Média</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let aluno of alunos">
+      <td>{{ aluno.nome }}</td>
+      <td *ngFor="let avaliacao of avaliacoes">
+        <input
+          type="number"
+          min="0"
+          max="10"
+          [value]="getNota(aluno, avaliacao.id)"
+          (input)="setNota(aluno, avaliacao.id, $any($event.target).value)"
+        />
+      </td>
+      <td>{{ calcularMedia(aluno) }}</td>
+    </tr>
+  </tbody>
+</table>
+
+<div *ngIf="alunos.length > 0" class="acoes">
+  <button (click)="salvarNotas()">Salvar notas</button>
+</div>
