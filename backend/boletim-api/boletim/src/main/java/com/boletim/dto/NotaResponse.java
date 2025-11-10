@@ -1,29 +1,18 @@
 package com.boletim.dto;
 
-import java.time.LocalDate;
-
 public class NotaResponse {
 
     private Long id;
     private double valor;
-    private String tipoAvaliacao;
-    private LocalDate data;
-    private String disciplina;
-    private String turma;
+    private AvaliacaoResponse avaliacao;
+    private TurmaResponse turma;
 
-    public NotaResponse(Long id, Double valor, String tipoAvaliacao, LocalDate data, String disciplina, String turma) {
-    }
 
-    public NotaResponse(Long id, double valor, String tipoAvaliacao, LocalDate data, String disciplina, String turma) {
+    public NotaResponse(Long id, double valor, AvaliacaoResponse avaliacao, TurmaResponse turma) {
         this.id = id;
         this.valor = valor;
-        this.tipoAvaliacao = tipoAvaliacao;
-        this.data = data;
-        this.disciplina = disciplina;
+        this.avaliacao = avaliacao;
         this.turma = turma;
-    }
-
-    public NotaResponse(Long id, Long id1, String nome, Long id2, String tipo, Double valor) {
     }
 
     public Long getId() {
@@ -42,35 +31,19 @@ public class NotaResponse {
         this.valor = valor;
     }
 
-    public String getTipoAvaliacao() {
-        return tipoAvaliacao;
+    public AvaliacaoResponse getAvaliacao() {
+        return avaliacao;
     }
 
-    public void setTipoAvaliacao(String tipoAvaliacao) {
-        this.tipoAvaliacao = tipoAvaliacao;
+    public void setAvaliacao(AvaliacaoResponse avaliacao) {
+        this.avaliacao = avaliacao;
     }
 
-    public LocalDate getData() {
-        return data;
-    }
-
-    public void setData(LocalDate data) {
-        this.data = data;
-    }
-
-    public String getDisciplina() {
-        return disciplina;
-    }
-
-    public void setDisciplina(String disciplina) {
-        this.disciplina = disciplina;
-    }
-
-    public String getTurma() {
+    public TurmaResponse getTurma() {
         return turma;
     }
 
-    public void setTurma(String turma) {
+    public void setTurma(TurmaResponse turma) {
         this.turma = turma;
     }
 }

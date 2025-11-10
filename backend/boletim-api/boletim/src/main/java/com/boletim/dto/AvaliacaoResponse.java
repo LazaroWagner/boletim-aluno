@@ -19,6 +19,16 @@ public class AvaliacaoResponse {
         this.disciplina = disciplina;
     }
 
+    public AvaliacaoResponse(String tipo, LocalDate data){
+        this.tipo = tipo;
+        this.data = data;
+    };
+
+    public AvaliacaoResponse(Long id, LocalDate data){
+        this.id = id;
+        this.data = data;
+    };
+
     public AvaliacaoResponse(Long id, String tipo, LocalDate data, double peso, Long id1, String nome) {
 
         this.id = id;
@@ -35,6 +45,7 @@ public class AvaliacaoResponse {
         this.peso = peso;
         this.disciplina = new DisciplinaResponse(null, nome);
     }
+
 
     public Long getId() {
         return id;

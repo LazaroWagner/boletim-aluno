@@ -27,9 +27,10 @@ public class NotaController {
         return ResponseEntity.ok(notaService.listarTodo());
     }
 
-    @GetMapping("/aluno/{idAluno}")
-    public List<NotaResponse> listarNotasPorAluno(@PathVariable Long idAluno) {
-        return notaService.listarNotasAluno(idAluno);
+    @GetMapping("/aluno/{id}")
+    public ResponseEntity<List<NotaResponse>> listarNotasAluno(@PathVariable Long id) {
+        List<NotaResponse> notas = notaService.listarNotasAluno(id);
+        return ResponseEntity.ok(notas);
     }
 
     @GetMapping("/media/filtro")

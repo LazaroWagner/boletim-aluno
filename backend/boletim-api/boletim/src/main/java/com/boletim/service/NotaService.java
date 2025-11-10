@@ -1,8 +1,6 @@
 package com.boletim.service;
 
-import com.boletim.dto.MediaAlunoResponse;
-import com.boletim.dto.NotaRequest;
-import com.boletim.dto.NotaResponse;
+import com.boletim.dto.*;
 import com.boletim.model.Aluno;
 import com.boletim.model.Avaliacao;
 import com.boletim.model.Nota;
@@ -87,11 +85,21 @@ public class NotaService {
         return notas.stream().map(nota -> new NotaResponse(
                 nota.getId(),
                 nota.getValor(),
-                nota.getAvaliacao().getTipo(),
-                nota.getAvaliacao().getData(),
-                nota.getAvaliacao().getDisciplina().getNome(),
-                nota.getTurma().getNome()
+                new AvaliacaoResponse(
+                        nota.getAvaliacao().getId(),
+                        nota.getAvaliacao().getTipo(),
+                        nota.getAvaliacao().getData(),
+                        nota.getAvaliacao().getPeso(),
+                        nota.getAvaliacao().getDisciplina().getId(),
+                        nota.getAvaliacao().getDisciplina().getNome()
+                ),
+                new TurmaResponse(
+                        nota.getTurma().getId(),
+                        nota.getTurma().getNome()
+                )
         )).collect(Collectors.toList());
+
+
     }
 
     public List<NotaResponse> salvarLote(List<NotaRequest> dtos) {
@@ -121,14 +129,14 @@ public class NotaService {
     }
 
     private NotaResponse toResponse(Nota nota) {
-        return new NotaResponse(
-                nota.getId(),
-                nota.getAluno().getId(),
-                nota.getAluno().getNome(),
-                nota.getAvaliacao().getId(),
-                nota.getAvaliacao().getTipo(),
-                nota.getValor()
-        );
+//        NotaResponse notaTeste =  new NotaResponse(
+//                nota.getId(),
+//                nota.getAluno().getId()
+//                nota.getAvaliacao().getId(),
+//                nota.getValor(),
+//                nota.getTurma().getId()
+//        );
+        return null;
     }
 
     public Double calcularMediaPonderada(Long alunoId, Long turmaId) {
