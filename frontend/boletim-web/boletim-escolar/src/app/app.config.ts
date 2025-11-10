@@ -9,18 +9,12 @@ import { provideClientHydration, withEventReplay } from '@angular/platform-brows
 
 import { routes } from './app.routes';
 
-export const appConfig : ApplicationConfig = {
+export const appConfig: ApplicationConfig = {
   providers: [
+    provideBrowserGlobalErrorListeners(),
+    provideZonelessChangeDetection(),
     provideHttpClient(),
-    provideRouter(routes)
+    provideRouter(routes),
+    provideClientHydration(withEventReplay())
   ]
-}
-
-// export const appConfig: ApplicationConfig = {
-//   providers: [
-//     provideBrowserGlobalErrorListeners(),
-//     provideZonelessChangeDetection(),
-//     provideRouter(routes),
-//     provideClientHydration(withEventReplay())
-//   ]
-// };
+};
