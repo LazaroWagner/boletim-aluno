@@ -30,32 +30,30 @@ Este projeto é um MVP para lançamento de notas escolares com cálculo de médi
 
 ### Backend
 
-1. Navegue até a pasta `backend/boletim-api`
+1. Navegue até a pasta `backend/boletim-api/boletim`
 2. Execute o projeto com sua IDE ou terminal:
 
 ```bash
 ./mvnw spring-boot:run
 ou 
 ./runapp.sh
-
+```
 ### A API estará disponível em http://localhost:8080
 
 
 ### Frontend
 
-- Navegue até a pasta frontend/boletim-web
+- Navegue até a pasta `frontend/boletim-web/boletim-escolar`
 - Instale as dependências:
 
-'
+
     npm install
-'
+
 
 - Rode o servidor Angular:
-'
+  ```bash
     ng serve
-
-'
-
+  ```
 ## Estrutura de Pastas
 
 - Listagem de alunos, turmas, disciplinas, avaliações e notas
