@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { AlunoService } from '../services/aluno.service';
-import { AlunoResponse } from '../models/aluno.model';
+import { AlunoService } from '../../services/aluno.service';
+import { AlunoResponse } from '../../models/aluno.model';
 
 @Component({
   selector: 'app-aluno',

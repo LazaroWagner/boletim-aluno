@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { AvaliacaoService } from '../services/avaliacao.service';
-import { AvaliacaoResponse } from '../models/avaliacao.model';
+import { AvaliacaoService } from '../../services/avaliacao.service';
+import { AvaliacaoResponse } from '../../models/avaliacao.model';
 
 @Component({
   selector: 'app-avaliacao',

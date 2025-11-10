@@ -1,0 +1,19 @@
+<mat-sidenav-container class="layout-container">
+  <mat-sidenav mode="side" opened>
+    <mat-nav-list>
+      <a mat-list-item routerLink="/alunos">Alunos</a>
+      <a mat-list-item routerLink="/alunos/cadastrar">Cadastrar Aluno</a>
+      <a mat-list-item routerLink="/boletim">Boletim</a>
+    </mat-nav-list>
+  </mat-sidenav>
+
+  <mat-sidenav-content>
+    <mat-toolbar color="primary">
+      <span>Sistema Escolar</span>
+    </mat-toolbar>
+
+    <div class="conteudo">
+      <router-outlet></router-outlet>
+    </div>
+  </mat-sidenav-content>
+</mat-sidenav-container>

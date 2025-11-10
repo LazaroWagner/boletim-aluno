@@ -1,14 +1,10 @@
 import { Component } from '@angular/core';
-import { BoletimComponent } from './pages/boletim/boletim.component';
-import { CommonModule } from '@angular/common';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [CommonModule, BoletimComponent],
-  templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss']
+  imports: [RouterModule],
+  templateUrl: './app.component.html'
 })
-export class AppComponent {
-  title = 'boletim-escolar';
-}
+export class AppComponent {}

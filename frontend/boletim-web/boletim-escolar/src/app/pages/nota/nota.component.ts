@@ -1,10 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { NotaService } from '../services/nota.service';
-import { NotaResponse } from '../models/nota.model';
+import { NotaService } from '../../services/nota.service';
+import { NotaResponse } from '../../models/nota.model';
+import { NgForOf } from '@angular/common';
 
 @Component({
   selector: 'app-nota',
   templateUrl: './nota.component.html',
+  imports: [NgForOf],
   //styleUrls: ['./nota.component.css']
 })
 export class NotaComponent implements OnInit {

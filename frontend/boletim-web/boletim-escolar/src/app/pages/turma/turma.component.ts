@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { TurmaService } from '../services/turma.service';
-import { TurmaResponse } from '../models/turma.model';
+import { TurmaService } from '../../services/turma.service';
+import { TurmaResponse } from '../../models/turma.model';
 
 @Component({
   selector: 'app-turma',

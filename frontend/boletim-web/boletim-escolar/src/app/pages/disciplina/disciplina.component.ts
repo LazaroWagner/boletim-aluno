@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { DisciplinaService } from '../services/disciplina.service';
-import { DisciplinaResponse } from '../models/disciplina.model';
+import { DisciplinaService } from '../../services/disciplina.service';
+import { DisciplinaResponse } from '../../models/disciplina.model';
 
 @Component({
   selector: 'app-disciplina',
