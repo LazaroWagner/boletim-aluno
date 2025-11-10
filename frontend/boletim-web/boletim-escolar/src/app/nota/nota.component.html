@@ -1,0 +1,23 @@
+<h2>Lista de Notas</h2>
+<table>
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Aluno</th>
+      <th>Avaliação</th>
+      <th>Valor</th>
+      <th>Data</th>
+      <th>Tipo</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let nota of notas">
+      <td>{{ nota.id }}</td>
+      <td>{{ nota.aluno?.nome }}</td>
+      <td>{{ nota.avaliacao?.titulo }}</td>
+      <td>{{ nota.valor }}</td>
+      <td>{{ nota.avaliacao?.data }}</td>
+      <td>{{ nota.avaliacao?.tipo }}</td>
+    </tr>
+  </tbody>
+</table>

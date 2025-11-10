@@ -1,0 +1,15 @@
+<h2>Lista de Turmas</h2>
+<table>
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Nome</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let turma of turmas">
+      <td>{{ turma.id }}</td>
+      <td>{{ turma.nome }}</td>
+    </tr>
+  </tbody>
+</table>

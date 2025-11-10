@@ -1,16 +1,40 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatSelectModule } from '@angular/material/select';
+import { MatInputModule } from '@angular/material/input';
+import { MatTableModule } from '@angular/material/table';
+import { MatButtonModule } from '@angular/material/button';
+
+import { TurmaService } from '../../services/turma.service';
+import { DisciplinaService } from '../../services/disciplina.service';
+import { AvaliacaoService } from '../../services/avaliacao.service';
 import { NotaService } from '../../services/nota.service';
+import { AlunoService } from '../../services/aluno.service';
 
 @Component({
   selector: 'app-boletim',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [
+    CommonModule,
+    FormsModule,
+    MatFormFieldModule,
+    MatSelectModule,
+    MatInputModule,
+    MatTableModule,
+    MatButtonModule
+  ],
   templateUrl: './boletim.component.html',
   styleUrls: ['./boletim.component.scss']
 })
 export class BoletimComponent implements OnInit {
+  turmaService = inject(TurmaService);
+  disciplinaService = inject(DisciplinaService);
+  avaliacaoService = inject(AvaliacaoService);
+  notaService = inject(NotaService);
+  alunoService = inject(AlunoService);
+
   turmas: any[] = [];
   disciplinas: any[] = [];
   turmaSelecionada: number | null = null;
@@ -19,20 +43,25 @@ export class BoletimComponent implements OnInit {
   avaliacoes: any[] = [];
   alunos: any[] = [];
 
-  constructor(private notaService: NotaService) {}
-
   ngOnInit(): void {
-    this.notaService.getTurmas().subscribe(t => this.turmas = t);
-    this.notaService.getDisciplinas().subscribe(d => this.disciplinas = d);
+    this.turmaService.getTurmas().subscribe(t => this.turmas = t);
+    this.disciplinaService.getDisciplinas().subscribe(d => this.disciplinas = d);
   }
 
   carregarBoletim(): void {
     if (!this.turmaSelecionada || !this.disciplinaSelecionada) return;
 
-    this.notaService.getAvaliacoes(this.turmaSelecionada, this.disciplinaSelecionada)
-      .subscribe(data => {
-        this.avaliacoes = data.avaliacoes;
-        this.alunos = data.alunos.map((a: any) => ({ ...a, notas: {} }));
+    this.avaliacaoService.getAvaliacoesPorDisciplina(this.disciplinaSelecionada)
+      .subscribe(avaliacoes => {
+        this.avaliacoes = avaliacoes;
+
+        this.alunoService.getAlunosPorTurma(this.turmaSelecionada!)
+          .subscribe(alunos => {
+            this.alunos = alunos.map(aluno => ({
+              ...aluno,
+              notas: {}
+            }));
+          });
       });
   }
 
@@ -58,7 +87,7 @@ export class BoletimComponent implements OnInit {
       const avaliacaoId = Number(avaliacaoIdStr);
       const peso = this.avaliacoes.find(a => a.id === avaliacaoId)?.peso ?? 1;
       somaPesos += peso;
-      //somaNotas += nota * peso;
+      somaNotas += Number(nota) * peso;
     }
 
     return (somaNotas / somaPesos).toFixed(2);
@@ -69,11 +98,12 @@ export class BoletimComponent implements OnInit {
       Object.entries(aluno.notas).map(([avaliacaoId, valor]) => ({
         alunoId: aluno.id,
         avaliacaoId: Number(avaliacaoId),
-        valor: Number(valor)
+        valor: Number(valor),
+        turmaId: this.turmaSelecionada!.toString()
       }))
     );
 
-    this.notaService.salvarNotas(payload).subscribe({
+    this.notaService.criarNotasEmLote(payload).subscribe({
       next: () => alert('Notas salvas com sucesso!'),
       error: () => alert('Erro ao salvar notas.')
     });
