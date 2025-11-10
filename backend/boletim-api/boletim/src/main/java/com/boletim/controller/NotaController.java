@@ -1,11 +1,13 @@
 package com.boletim.controller;
 
 import com.boletim.dto.MediaAlunoResponse;
+import com.boletim.dto.NotaLoteRequest;
 import com.boletim.dto.NotaRequest;
 import com.boletim.dto.NotaResponse;
 import com.boletim.service.NotaService;
 import jakarta.validation.Valid;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -47,13 +49,13 @@ public class NotaController {
     @PostMapping
     public ResponseEntity<NotaResponse> criar(@Valid @RequestBody NotaRequest request) {
         NotaResponse nota = notaService.criar(request);
-        return ResponseEntity.ok(nota);
+        return ResponseEntity.status(HttpStatus.CREATED).body(nota);
     }
 
     @PostMapping("/lote")
-    public ResponseEntity<List<NotaResponse>> salvarEmLote(@Valid @RequestBody List<NotaRequest> requests) {
-        List<NotaResponse> notas = notaService.salvarLote(requests);
-        return ResponseEntity.ok(notas);
+    public ResponseEntity<List<NotaResponse>> salvarNotasLote(@Valid @RequestBody List<NotaLoteRequest> dto) {
+        List<NotaResponse> notas = notaService.salvarNotasLote(dto);
+        return ResponseEntity.status(HttpStatus.CREATED).body(notas);
     }
 
     @GetMapping("/media/turma/{idTurma}/disciplina/{idDisciplina}")
@@ -62,5 +64,17 @@ public class NotaController {
             @PathVariable Long idDisciplina) {
         List<MediaAlunoResponse> medias = notaService.calcularMediaTurmaDisciplina(idTurma, idDisciplina);
         return ResponseEntity.ok(medias);
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<NotaResponse> atualizar(@PathVariable Long id, @RequestBody NotaRequest dto) {
+        NotaResponse atualizada = notaService.atualizar(id, dto);
+        return ResponseEntity.ok(atualizada);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deletar(@PathVariable Long id) {
+        notaService.deletar(id);
+        return ResponseEntity.noContent().build();
     }
 }

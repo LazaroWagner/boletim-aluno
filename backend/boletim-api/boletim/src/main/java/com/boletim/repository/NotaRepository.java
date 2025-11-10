@@ -1,5 +1,7 @@
 package com.boletim.repository;
 
+import com.boletim.model.Aluno;
+import com.boletim.model.Avaliacao;
 import com.boletim.model.Nota;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -14,6 +16,8 @@ public interface NotaRepository extends JpaRepository<Nota, Long> {
     List<Nota> findByAlunoIdAndTurmaId(Long alunoId, Long turmaId);
 
     Optional<Nota> findByAlunoIdAndAvaliacaoId(Long alunoId, Long avaliacaoId);
+
+    Optional<Nota> findByAlunoAndAvaliacao(Aluno aluno, Avaliacao avaliacao);
 
     List<Nota> findByAlunoId(Long alunoId);
 
