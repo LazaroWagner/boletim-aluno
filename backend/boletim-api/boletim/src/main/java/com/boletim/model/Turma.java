@@ -1,5 +1,6 @@
 package com.boletim.model;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 
@@ -17,6 +18,7 @@ public class Turma {
     private String nome;
 
     @OneToMany(mappedBy = "turma")
+    @JsonManagedReference
     private List<Aluno> alunos = new ArrayList<>();
 
     public Turma() {

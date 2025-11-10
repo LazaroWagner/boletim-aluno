@@ -1,5 +1,6 @@
 package com.boletim.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -14,6 +15,7 @@ public class Aluno {
     private String nome;
 
     @ManyToOne
+    @JsonIgnore
     @JoinColumn(name = "turma_id")
     @NotNull(message = "A turma é obrigatoria")
     private Turma turma;
