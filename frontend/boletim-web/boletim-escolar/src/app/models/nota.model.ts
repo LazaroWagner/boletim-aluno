@@ -1,3 +1,5 @@
+import { Turma } from "app/pages/turma/turma";
+
 export interface NotaRequest {
   alunoId: number;
   avaliacaoId: number;
@@ -17,6 +19,7 @@ export interface NotaResponse {
   aluno: {
     id: number;
     nome: string;
+    turma: Turma
   };
   avaliacao: {
     id: number;

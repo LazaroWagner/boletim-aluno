@@ -9,17 +9,17 @@ export const routes: Routes = [
       {
         path: 'boletim',
         loadComponent: () =>
-          import('./pages/boletim/boletim').then(m => m.BoletimComponent)
+          import('./pages/boletim/boletim').then(m => m.Boletim)
       },
       {
         path: 'alunos',
         loadComponent: () =>
-          import('./pages/aluno/aluno').then(m => m.AlunoComponent)
+          import('./pages/aluno/aluno').then(m => m.Aluno)
       },
       {
         path: 'alunos/cadastrar',
         loadComponent: () =>
-          import('./pages/aluno/cadastrar-aluno/cadastrar-aluno').then(m => m.CadastrarAlunoComponent)
+          import('./pages/aluno/cadastrar-aluno/cadastrar-aluno').then(m => m.CadastrarAluno)
       },
       {
         path: 'alunos/editar/:id',

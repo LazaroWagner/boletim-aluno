@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectorRef, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { MatCardModule } from '@angular/material/card';
@@ -9,6 +9,8 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { AlunoService } from '../../../services/aluno.service';
 import { AlunoRequest } from '../../../models/aluno.model';
+import { TurmaService } from 'app/services/turma.service';
+import { TurmaResponse } from 'app/models/turma.model';
 
 @Component({
   selector: 'app-cadastrar-aluno',
@@ -26,20 +28,27 @@ import { AlunoRequest } from '../../../models/aluno.model';
   templateUrl: './cadastrar-aluno.html',
   styleUrls: ['./cadastrar-aluno.scss']
 })
-export class CadastrarAlunoComponent {
+export class CadastrarAluno implements OnInit {
+  turmas!: TurmaResponse[];
   aluno: AlunoRequest = {
     nome: '',
     matricula: '',
     turmaId: 0
   };
 
-  turmas = [
-    { id: 1, nome: '1º Ano A' },
-    { id: 2, nome: '1º Ano B' },
-    { id: 3, nome: '2º Ano A' }
-  ];
 
-  constructor(private alunoService: AlunoService, private snackBar: MatSnackBar) {}
+  constructor(
+    private alunoService: AlunoService,
+    private turmaService: TurmaService,
+    private snackBar: MatSnackBar,
+    private cdr: ChangeDetectorRef
+  ) {}
+
+  ngOnInit(): void {
+    this.turmaService.getTurmas().subscribe(data => {
+      this.turmas = data;
+    })
+  }
 
   salvar() {
     if (!this.aluno.nome || !this.aluno.matricula || !this.aluno.turmaId) {

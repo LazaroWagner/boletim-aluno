@@ -1,4 +1,4 @@
-import { Component, OnInit, inject } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -12,6 +12,9 @@ import { DisciplinaService } from '../../services/disciplina.service';
 import { AvaliacaoService } from '../../services/avaliacao.service';
 import { NotaService } from '../../services/nota.service';
 import { AlunoService } from '../../services/aluno.service';
+import { defer } from 'rxjs';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatCardModule } from "@angular/material/card";
 
 @Component({
   selector: 'app-boletim',
@@ -23,17 +26,21 @@ import { AlunoService } from '../../services/aluno.service';
     MatSelectModule,
     MatInputModule,
     MatTableModule,
-    MatButtonModule
-  ],
+    MatButtonModule,
+    MatSnackBarModule,
+    MatCardModule
+],
   templateUrl: './boletim.html',
   styleUrls: ['./boletim.scss']
 })
-export class BoletimComponent implements OnInit {
+export class Boletim implements OnInit {
   turmaService = inject(TurmaService);
   disciplinaService = inject(DisciplinaService);
   avaliacaoService = inject(AvaliacaoService);
   notaService = inject(NotaService);
   alunoService = inject(AlunoService);
+  cdr = inject(ChangeDetectorRef);
+  
 
   turmas: any[] = [];
   disciplinas: any[] = [];
@@ -61,6 +68,7 @@ export class BoletimComponent implements OnInit {
               ...aluno,
               notas: {}
             }));
+            this.cdr.detectChanges();
           });
       });
   }
@@ -108,4 +116,10 @@ export class BoletimComponent implements OnInit {
       error: () => alert('Erro ao salvar notas.')
     });
   }
+
+  displayedColumns = [
+  'aluno',
+  ...this.avaliacoes.map(a => 'avaliacao_' + a.id),
+  'media'
+];
 }

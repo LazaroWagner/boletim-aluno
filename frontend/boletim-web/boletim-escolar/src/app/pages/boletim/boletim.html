@@ -1,49 +1,82 @@
-<h2>Boletim Escolar</h2>
+<mat-card>
+  <mat-card-title>Boletim Escolar</mat-card-title>
+  <mat-card-content>
+    <!-- Filtros -->
+    <form class="filtros" style="display: flex; gap: 16px; flex-wrap: wrap;">
+      <mat-form-field appearance="fill">
+        <mat-label>Turma</mat-label>
+        <mat-select [(ngModel)]="turmaSelecionada" name="turma">
+          <mat-option [value]="null">Selecione</mat-option>
+          @for (turma of turmas; track turma.id) {
+            <mat-option [value]="turma.id">{{ turma.nome }}</mat-option>
+          }
+        </mat-select>
+      </mat-form-field>
 
-<!-- <div class="filtros">
-  <label for="turma">Turma:</label>
-  <select id="turma" [(ngModel)]="turmaSelecionada">
-    <option [value]="null">Selecione</option>
-    <option *ngFor="let turma of turmas" [value]="turma.id">{{ turma.nome }}</option>
-  </select>
+      <mat-form-field appearance="fill">
+        <mat-label>Disciplina</mat-label>
+        <mat-select [(ngModel)]="disciplinaSelecionada" name="disciplina">
+          <mat-option [value]="null">Selecione</mat-option>
+          @for (disciplina of disciplinas; track disciplina.id) {
+            <mat-option [value]="disciplina.id">{{ disciplina.nome }}</mat-option>
+          }
+        </mat-select>
+      </mat-form-field>
 
-  <label for="disciplina">Disciplina:</label>
-  <select id="disciplina" [(ngModel)]="disciplinaSelecionada">
-    <option [value]="null">Selecione</option>
-    <option *ngFor="let disciplina of disciplinas" [value]="disciplina.id">{{ disciplina.nome }}</option>
-  </select>
+      <button mat-raised-button color="primary" (click)="carregarBoletim()">
+        Carregar boletim
+      </button>
+    </form>
+  </mat-card-content>
+</mat-card>
 
-  <button (click)="carregarBoletim()">Carregar boletim</button>
-</div>
+<!-- Tabela de Notas -->
+<mat-card *ngIf="alunos.length > 0" style="margin-top: 24px;">
+  <mat-card-content>
+    <table mat-table [dataSource]="alunos" class="mat-elevation-z2" style="width: 100%;">
 
-<table *ngIf="alunos.length > 0">
-  <thead>
-    <tr>
-      <th>Aluno</th>
-      <th *ngFor="let avaliacao of avaliacoes">
-        {{ avaliacao.titulo }}<br />
-        <small>(peso {{ avaliacao.peso }})</small>
-      </th>
-      <th>Média</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr *ngFor="let aluno of alunos">
-      <td>{{ aluno.nome }}</td>
-      <td *ngFor="let avaliacao of avaliacoes">
-        <input
-          type="number"
-          min="0"
-          max="10"
-          [value]="getNota(aluno, avaliacao.id)"
-          (input)="setNota(aluno, avaliacao.id, $any($event.target).value)"
-        />
-      </td>
-      <td>{{ calcularMedia(aluno) }}</td>
-    </tr>
-  </tbody>
-</table>
+      <!-- Coluna Aluno -->
+      <ng-container matColumnDef="aluno">
+        <th mat-header-cell *matHeaderCellDef> Aluno </th>
+        <td mat-cell *matCellDef="let aluno"> {{ aluno.nome }} </td>
+      </ng-container>
 
-<div *ngIf="alunos.length > 0" class="acoes">
-  <button (click)="salvarNotas()">Salvar notas</button>
-</div> -->
+      <!-- Colunas de Avaliações -->
+      @for (avaliacao of avaliacoes; track avaliacao.id) {
+        <ng-container [matColumnDef]="'avaliacao_' + avaliacao.id">
+          <th mat-header-cell *matHeaderCellDef>
+            {{ avaliacao.titulo }}<br />
+            <small>(peso {{ avaliacao.peso }})</small>
+          </th>
+          <td mat-cell *matCellDef="let aluno">
+            <input
+              matInput
+              type="number"
+              min="0"
+              max="10"
+              [value]="getNota(aluno, avaliacao.id)"
+              (input)="setNota(aluno, avaliacao.id, $any($event.target).value)"
+            />
+          </td>
+        </ng-container>
+      }
+
+      <!-- Coluna Média -->
+      <ng-container matColumnDef="media">
+        <th mat-header-cell *matHeaderCellDef> Média </th>
+        <td mat-cell *matCellDef="let aluno"> {{ calcularMedia(aluno) }} </td>
+      </ng-container>
+
+      <!-- Cabeçalho e Linhas -->
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+  </mat-card-content>
+
+  <!-- Botão de Salvar -->
+  <mat-card-actions align="end">
+    <button mat-raised-button color="accent" (click)="salvarNotas()">
+      Salvar notas
+    </button>
+  </mat-card-actions>
+</mat-card>

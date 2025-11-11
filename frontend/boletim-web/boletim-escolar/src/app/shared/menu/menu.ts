@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterModule } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatListModule } from '@angular/material/list';
@@ -22,4 +22,7 @@ import { MatButtonModule } from '@angular/material/button';
   templateUrl: './menu.html',
   styleUrl: './menu.scss',
 })
-export class Menu {}
+export class Menu {
+  constructor(private router: Router) {}
+
+}

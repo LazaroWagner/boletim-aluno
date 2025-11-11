@@ -5,7 +5,7 @@ import { NgForOf } from '@angular/common';
 
 @Component({
   selector: 'app-nota',
-  templateUrl: './nota.component.html',
+  templateUrl: './nota.html',
   imports: [NgForOf],
   //styleUrls: ['./nota.component.css']
 })

@@ -1,19 +1,39 @@
 <h2>Lista de Alunos</h2>
-<table>
+
+@if (alunos$ | async) {
+  <table border="1" cellpadding="8" cellspacing="0">
   <thead>
     <tr>
       <th>ID</th>
       <th>Nome</th>
-      <th>Email</th>
       <th>Turma</th>
     </tr>
   </thead>
-  <!-- <tbody>
-    <tr *ngFor="let aluno of alunos">
-      <td>{{ aluno.id }}</td>
-      <td>{{ aluno.nome }}</td>
-      <td>{{ aluno.email }}</td>
-      <td>{{ aluno.turma?.nome }}</td>
-    </tr>
+  <tbody>
+    @for (aluno of alunos; track aluno.id) {
+      <tr>
+        <td>{{ aluno.id }}</td>
+        <td>{{ aluno.nome }}</td>
+        <td>{{ aluno.turma?.nome || 'Sem turma' }}</td>
+      </tr>
+    }
+    @empty {
+      <tr>
+        <td colspan="3">Nenhum aluno encontrado.</td>
+      </tr>
+    }
   </tbody>
-</table> -->
+</table>
+}
+
+
+<!-- <p>Renderizando...</p>
+
+@for (aluno of alunos; track aluno.id) {
+  <p>Item: {{ aluno.id }}</p>
+  <p>Item: {{ aluno.nome }}</p>
+  <p>Item: {{ aluno.turma?.nome }}</p>
+}
+@empty {
+  <p>Nada para mostrar.</p>
+} -->

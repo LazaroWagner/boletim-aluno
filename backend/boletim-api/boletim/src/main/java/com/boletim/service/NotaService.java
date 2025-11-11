@@ -86,7 +86,7 @@ public class NotaService {
                 new AlunoResponse(
                         nota.getAluno().getId(),
                         nota.getAluno().getNome(),
-                        nota.getAluno().getTurma().getNome()
+                        new TurmaResponse(nota.getAluno().getTurma())
                 ),
                 new AvaliacaoResponse(
                         nota.getAvaliacao().getId(),
@@ -133,7 +133,7 @@ public class NotaService {
                     new AlunoResponse(
                             nota.getAluno().getId(),
                             nota.getAluno().getNome(),
-                            nota.getAluno().getTurma().getNome()
+                            new TurmaResponse(nota.getAluno().getTurma())
                     ),
                     new AvaliacaoResponse(
                             avaliacao.getId(),
@@ -162,7 +162,7 @@ public class NotaService {
         AlunoResponse alunoResponse = new AlunoResponse(
                 aluno.getId(),
                 aluno.getNome(),
-                aluno.getTurma().getNome()
+                new TurmaResponse(aluno.getTurma())
         );
 
         DisciplinaResponse disciplinaResponse = new DisciplinaResponse(

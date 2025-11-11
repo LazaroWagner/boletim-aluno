@@ -7,7 +7,6 @@ export interface AlunoRequest {
 export interface AlunoResponse {
   id: number;
   nome: string;
-  matricula: string;
   turma: {
     id: number;
     nome: string;
