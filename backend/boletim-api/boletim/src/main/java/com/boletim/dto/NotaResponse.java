@@ -19,13 +19,13 @@ public class NotaResponse {
         this.turma = turma;
     }
 
-    public NotaResponse(Long id, AlunoResponse aluno, Long avaliacaoId, Double valor, Long turmaId) {
-        this.id = id;
-        this.aluno = new AlunoResponse(aluno.getId(), aluno.getNome(), aluno.getTurmaNome());
-        this.valor = valor;
-        this.avaliacao = new AvaliacaoResponse(avaliacaoId, null);
-        this.turma = new TurmaResponse(turmaId, null);
-    }
+//    public NotaResponse(Long id, AlunoResponse aluno, Long avaliacaoId, Double valor, Long turmaId) {
+//        this.id = id;
+//        this.aluno = new AlunoResponse(aluno.getId(), aluno.getNome(), aluno.getTurma());
+//        this.valor = valor;
+//        this.avaliacao = new AvaliacaoResponse(avaliacaoId, null);
+//        this.turma = new TurmaResponse(turmaId, null);
+//    }
 
     public Long getId() {
         return id;

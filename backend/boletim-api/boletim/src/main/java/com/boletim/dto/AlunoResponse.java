@@ -4,12 +4,12 @@ public class AlunoResponse {
 
     private Long id;
     private String nome;
-    private String turmaNome;
+    private TurmaResponse turma;
 
-    public AlunoResponse(Long id, String nome, String turmaNome) {
+    public AlunoResponse(Long id, String nome, TurmaResponse turma) {
         this.id = id;
         this.nome = nome;
-        this.turmaNome = turmaNome;
+        this.turma = turma;
     }
 
     public Long getId() {
@@ -28,11 +28,11 @@ public class AlunoResponse {
         this.nome = nome;
     }
 
-    public String getTurmaNome() {
-        return turmaNome;
+    public TurmaResponse getTurma() {
+        return turma;
     }
 
-    public void setTurmaNome(String turmaNome) {
-        this.turmaNome = turmaNome;
+    public void setTurma(TurmaResponse turma) {
+        this.turma = turma;
     }
 }
