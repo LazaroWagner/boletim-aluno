@@ -1,125 +1,103 @@
-import { ChangeDetectorRef, Component, OnInit, inject } from '@angular/core';
+import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
+import { MatOptionModule } from '@angular/material/core';
 import { MatInputModule } from '@angular/material/input';
-import { MatTableModule } from '@angular/material/table';
 import { MatButtonModule } from '@angular/material/button';
-
-import { TurmaService } from '../../services/turma.service';
-import { DisciplinaService } from '../../services/disciplina.service';
-import { AvaliacaoService } from '../../services/avaliacao.service';
-import { NotaService } from '../../services/nota.service';
-import { AlunoService } from '../../services/aluno.service';
-import { defer } from 'rxjs';
-import { MatSnackBarModule } from '@angular/material/snack-bar';
-import { MatCardModule } from "@angular/material/card";
+import { MatTableModule } from '@angular/material/table';
 
 @Component({
   selector: 'app-boletim',
   standalone: true,
+  templateUrl: './boletim.html',
+  styleUrls: ['./boletim.scss'],
   imports: [
     CommonModule,
     FormsModule,
+    MatCardModule,
     MatFormFieldModule,
     MatSelectModule,
+    MatOptionModule,
     MatInputModule,
-    MatTableModule,
     MatButtonModule,
-    MatSnackBarModule,
-    MatCardModule
-],
-  templateUrl: './boletim.html',
-  styleUrls: ['./boletim.scss']
+    MatTableModule,
+  ],
 })
-export class Boletim implements OnInit {
-  turmaService = inject(TurmaService);
-  disciplinaService = inject(DisciplinaService);
-  avaliacaoService = inject(AvaliacaoService);
-  notaService = inject(NotaService);
-  alunoService = inject(AlunoService);
-  cdr = inject(ChangeDetectorRef);
-  
+export class Boletim {
+  turmas = [
+    { id: 1, nome: 'Turma A' },
+    { id: 2, nome: 'Turma B' },
+  ];
 
-  turmas: any[] = [];
-  disciplinas: any[] = [];
+  disciplinas = [
+    { id: 1, nome: 'Matemática' },
+    { id: 2, nome: 'Português' },
+  ];
+
   turmaSelecionada: number | null = null;
   disciplinaSelecionada: number | null = null;
 
-  avaliacoes: any[] = [];
   alunos: any[] = [];
+  avaliacoes: any[] = [];
 
-  ngOnInit(): void {
-    this.turmaService.getTurmas().subscribe(t => this.turmas = t);
-    this.disciplinaService.getDisciplinas().subscribe(d => this.disciplinas = d);
+  notas: { [key: string]: number } = {};
+
+  displayedColumns: string[] = [];
+
+  carregarBoletim() {
+    this.alunos = [
+      { id: 1, nome: 'João' },
+      { id: 2, nome: 'Maria' },
+    ];
+
+    this.avaliacoes = [
+      { id: 1, titulo: 'Prova 1', peso: 2 },
+      { id: 2, titulo: 'Prova 2', peso: 3 },
+    ];
+
+    this.displayedColumns = [
+      'aluno',
+      ...this.avaliacoes.map(a => 'avaliacao_' + a.id),
+      'media',
+    ];
   }
 
-  carregarBoletim(): void {
-    if (!this.turmaSelecionada || !this.disciplinaSelecionada) return;
-
-    this.avaliacaoService.getAvaliacoesPorDisciplina(this.disciplinaSelecionada)
-      .subscribe(avaliacoes => {
-        this.avaliacoes = avaliacoes;
-
-        this.alunoService.getAlunosPorTurma(this.turmaSelecionada!)
-          .subscribe(alunos => {
-            this.alunos = alunos.map(aluno => ({
-              ...aluno,
-              notas: {}
-            }));
-            this.cdr.detectChanges();
-          });
-      });
+  getNota(aluno: any, avaliacaoId: number): number {
+    const key = `${aluno.id}-${avaliacaoId}`;
+    return this.notas[key] ?? 0;
   }
 
-  getNota(aluno: any, avaliacaoId: number): number | null {
-    return aluno.notas[avaliacaoId] ?? null;
+  setNota(aluno: any, avaliacaoId: number, valor: number) {
+    const key = `${aluno.id}-${avaliacaoId}`;
+    this.notas[key] = Number(valor);
   }
 
-  setNota(aluno: any, avaliacaoId: number, valor: number): void {
-    const nota = Number(valor);
-    if (!isNaN(nota) && nota >= 0 && nota <= 10) {
-      aluno.notas[avaliacaoId] = nota;
-    }
-  }
-
-  calcularMedia(aluno: any): string {
-    const notas = Object.entries(aluno.notas);
-    if (notas.length === 0) return '-';
-
+  calcularMedia(aluno: any): number {
     let somaPesos = 0;
     let somaNotas = 0;
 
-    for (const [avaliacaoIdStr, nota] of notas) {
-      const avaliacaoId = Number(avaliacaoIdStr);
-      const peso = this.avaliacoes.find(a => a.id === avaliacaoId)?.peso ?? 1;
-      somaPesos += peso;
-      somaNotas += Number(nota) * peso;
+    for (const avaliacao of this.avaliacoes) {
+      const nota = this.getNota(aluno, avaliacao.id);
+      somaNotas += nota * avaliacao.peso;
+      somaPesos += avaliacao.peso;
     }
 
-    return (somaNotas / somaPesos).toFixed(2);
+    return somaPesos > 0 ? Number((somaNotas / somaPesos).toFixed(2)) : 0;
   }
 
-  salvarNotas(): void {
-    const payload = this.alunos.flatMap(aluno =>
-      Object.entries(aluno.notas).map(([avaliacaoId, valor]) => ({
-        alunoId: aluno.id,
-        avaliacaoId: Number(avaliacaoId),
-        valor: Number(valor),
-        turmaId: this.turmaSelecionada!.toString()
-      }))
-    );
+  salvarNotas() {
+    const payload = this.alunos.map(aluno => ({
+      alunoId: aluno.id,
+      notas: this.avaliacoes.map(avaliacao => ({
+        avaliacaoId: avaliacao.id,
+        nota: this.getNota(aluno, avaliacao.id),
+      })),
+    }));
 
-    this.notaService.criarNotasEmLote(payload).subscribe({
-      next: () => alert('Notas salvas com sucesso!'),
-      error: () => alert('Erro ao salvar notas.')
-    });
+    console.log('Enviando para o backend:', payload);
+    // Aqui você faria a chamada HTTP real
   }
-
-  displayedColumns = [
-  'aluno',
-  ...this.avaliacoes.map(a => 'avaliacao_' + a.id),
-  'media'
-];
 }
