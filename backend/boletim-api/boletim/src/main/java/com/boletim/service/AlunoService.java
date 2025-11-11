@@ -2,6 +2,7 @@ package com.boletim.service;
 
 import com.boletim.dto.AlunoRequest;
 import com.boletim.dto.AlunoResponse;
+import com.boletim.dto.TurmaResponse;
 import com.boletim.exception.RecursoNaoEncontradoException;
 import com.boletim.model.Aluno;
 import com.boletim.model.Turma;
@@ -31,7 +32,7 @@ public class AlunoService {
             return new AlunoResponse(
                     aluno.getId(),
                     aluno.getNome(),
-                    aluno.getTurma().getNome()
+                    new TurmaResponse(aluno.getTurma())
             );
         }).collect(Collectors.toList());
 
@@ -82,7 +83,7 @@ public class AlunoService {
         return new AlunoResponse(
                 aluno.getId(),
                 aluno.getNome(),
-                aluno.getTurma().getNome()
+                new TurmaResponse(aluno.getTurma().getId(), aluno.getTurma().getNome())
         );
     }
 }

@@ -1,0 +1,27 @@
+<mat-card>
+  <mat-card-title>Cadastrar Aluno</mat-card-title>
+  <mat-card-content>
+    <form>
+      <mat-form-field appearance="fill">
+        <mat-label>Nome</mat-label>
+        <input matInput [(ngModel)]="aluno.nome" name="nome" />
+      </mat-form-field>
+
+      <mat-form-field appearance="fill">
+        <mat-label>Matrícula</mat-label>
+        <input matInput [(ngModel)]="aluno.matricula" name="matricula" />
+      </mat-form-field>
+
+      <mat-form-field appearance="fill">
+        <mat-label>Turma</mat-label>
+        <mat-select [(ngModel)]="aluno.turmaId" name="turmaId">
+          <mat-option *ngFor="let turma of turmas" [value]="turma.id">
+            {{ turma.nome }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <button mat-raised-button color="primary" (click)="salvar()">Salvar</button>
+    </form>
+  </mat-card-content>
+</mat-card>
